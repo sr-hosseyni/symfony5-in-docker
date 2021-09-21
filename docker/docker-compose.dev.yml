@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  php:
+    volumes:
+      - type: bind
+        source: ${APPLICATION}
+        target: /var/www
+        consistency: cached
+      - type: bind
+        source: ${PHP_LOG_PATH}
+        target: /var/log
+        consistency: delegated
+      - type: bind
+        source: ${VAR_DIR}/symfony
+        target: /var/symfony
+        consistency: delegated
+    environment:
+      - SYMFONY_VAR_DIR=/var/symfony/
+
+  nginx:
+    volumes:
+      - ${APPLICATION}:/var/www
